@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'dart:developer';
 
 void main() {
   runApp(const FormApp());
@@ -162,6 +163,7 @@ class _SignUpFormState extends State<SignUpForm> {
         hintText: 'DOB',
         labelText: 'Enter Date Of Birth',
       ),
+      // groupValue: _dob,
       onTap: () {
         DatePicker.showDatePicker(
           context,
@@ -172,8 +174,11 @@ class _SignUpFormState extends State<SignUpForm> {
           locale: LocaleType.en,
           onConfirm: (date) {
             setState(() {
+              log('data: $date');
+
               // Update the value of the form field with the selected date.
-              _dob = date.year.toString();
+              _dob = date.toString();
+              log('data1: $_dob');
             });
           },
         );
@@ -182,6 +187,7 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value!.isEmpty) {
           return 'Enter Date Of Birth!';
         } else {
+          _dob = value.toString();
           return null;
         }
       },
@@ -250,13 +256,28 @@ class _SignUpFormState extends State<SignUpForm> {
     ));
 
     void onPressedSubmit() {
-      if (_formKey.currentState!.validate()) {
-        print("Form Submitted!");
+      {
+        if (_formKey.currentState!.validate()) {
+          _formKey.currentState?.save();
+
+          print("Name " + _name);
+          print("Age " + _age.toString());
+          switch (_selectedGender) {
+            case 0:
+              print("Gender Male");
+              break;
+            case 1:
+              print("Gender Female");
+              break;
+          }
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Form Submitted')));
+        }
       }
     }
 
     formWidget.add(ElevatedButton(
-        child: const Text('Sign Up'), onPressed: onPressedSubmit));
+        child: const Text('Sign Up1'), onPressed: onPressedSubmit));
 
     return formWidget;
   }
