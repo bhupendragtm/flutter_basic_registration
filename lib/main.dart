@@ -53,7 +53,7 @@ class _SignUpFormState extends State<SignUpForm> {
   String _address = '';
   // strDt _date = '';
   int _age = -1;
-  int _dob = -1;
+  String _dob = '';
   String _maritalStatus = 'single';
   int _selectedGender = 0;
   String _phoneNo = '';
@@ -168,14 +168,14 @@ class _SignUpFormState extends State<SignUpForm> {
           showTitleActions: true,
           minTime: DateTime(-1, 1, 1),
           maxTime: DateTime(2030, 12, 31),
+          currentTime: DateTime.now(),
+          locale: LocaleType.en,
           onConfirm: (date) {
             setState(() {
               // Update the value of the form field with the selected date.
-              _dob = date.year;
+              _dob = date.year.toString();
             });
           },
-          currentTime: DateTime.now(),
-          locale: LocaleType.en,
         );
       },
       validator: (value) {
