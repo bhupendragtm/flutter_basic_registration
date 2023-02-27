@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 void main() {
   runApp(const FormApp());
@@ -52,6 +53,7 @@ class _SignUpFormState extends State<SignUpForm> {
   String _address = '';
   // strDt _date = '';
   int _age = -1;
+  int _dob = -1;
   String _maritalStatus = 'single';
   int _selectedGender = 0;
   String _phoneNo = '';
@@ -157,20 +159,31 @@ class _SignUpFormState extends State<SignUpForm> {
 
     formWidget.add(TextFormField(
       decoration: const InputDecoration(
-          hintText: 'DOB', labelText: 'Enter Date Of Birth'),
-      // onTap: () => pickDateOfBirth(context),
-      // keyboardType: TextInputType.number,
+        hintText: 'DOB',
+        labelText: 'Enter Date Of Birth',
+      ),
+      onTap: () {
+        DatePicker.showDatePicker(
+          context,
+          showTitleActions: true,
+          minTime: DateTime(-1, 1, 1),
+          maxTime: DateTime(2030, 12, 31),
+          onConfirm: (date) {
+            setState(() {
+              // Update the value of the form field with the selected date.
+              _dob = date.year;
+            });
+          },
+          currentTime: DateTime.now(),
+          locale: LocaleType.en,
+        );
+      },
       validator: (value) {
         if (value!.isEmpty) {
           return 'Enter Date Of Birth!';
         } else {
           return null;
         }
-      },
-      onSaved: (value) {
-        setState(() {
-          _age = int.parse(value.toString());
-        });
       },
     ));
 
@@ -179,7 +192,7 @@ class _SignUpFormState extends State<SignUpForm> {
         return 'Please enter Phone no';
       }
 
-      Pattern pattern = r'^(\+977)?[9][7-8]\d{8}$';
+      Pattern pattern = r'^(\+977)?[9][6-8]\d{8}$';
       RegExp regex = RegExp(pattern.toString());
       if (!regex.hasMatch(value.toString())) {
         return 'Enter Valid Phone No';
