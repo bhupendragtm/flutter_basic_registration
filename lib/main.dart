@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'dart:developer';
+// [log] data1: 2023-02-28 14:31:31.077223
 
 void main() {
   runApp(const FormApp());
@@ -56,43 +57,43 @@ class _SignUpFormState extends State<SignUpForm> {
   int _age = -1;
   String _dob = '';
   String _maritalStatus = 'single';
-  int _selectedGender = 0;
+  int _selectedProvience = 0;
   String _phoneNo = '';
   String _password = '';
 
-  List<DropdownMenuItem<int>> genderList = [];
+  List<DropdownMenuItem<int>> provienceList = [];
 
-  void loadGenderList() {
-    genderList = [];
-    genderList.add(const DropdownMenuItem(
+  void loadProvienceList() {
+    provienceList = [];
+    provienceList.add(const DropdownMenuItem(
       child: Text('Select Your Provience!'),
       value: 0,
     ));
-    genderList.add(const DropdownMenuItem(
+    provienceList.add(const DropdownMenuItem(
       child: Text('Provience 1'),
       value: 1,
     ));
-    genderList.add(const DropdownMenuItem(
+    provienceList.add(const DropdownMenuItem(
       child: Text('Provience 2'),
       value: 2,
     ));
-    genderList.add(const DropdownMenuItem(
+    provienceList.add(const DropdownMenuItem(
       child: Text('Provience 3'),
       value: 3,
     ));
-    genderList.add(const DropdownMenuItem(
+    provienceList.add(const DropdownMenuItem(
       child: Text('Provience 4'),
       value: 4,
     ));
-    genderList.add(const DropdownMenuItem(
+    provienceList.add(const DropdownMenuItem(
       child: Text('Provience 5'),
       value: 5,
     ));
-    genderList.add(const DropdownMenuItem(
+    provienceList.add(const DropdownMenuItem(
       child: Text('Provience 6'),
       value: 6,
     ));
-    genderList.add(const DropdownMenuItem(
+    provienceList.add(const DropdownMenuItem(
       child: Text('Provience 7'),
       value: 7,
     ));
@@ -100,7 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
-    loadGenderList();
+    loadProvienceList();
     // Build a Form widget using the _formKey we created above
     return Form(
         key: _formKey,
@@ -160,7 +161,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
     formWidget.add(TextFormField(
       decoration: const InputDecoration(
-        hintText: 'DOB',
+        // hintText: 'DOB',
         labelText: 'Enter Date Of Birth',
       ),
       // groupValue: _dob,
@@ -220,11 +221,11 @@ class _SignUpFormState extends State<SignUpForm> {
 
     formWidget.add(DropdownButton(
       hint: const Text('Select Gender'),
-      items: genderList,
-      value: _selectedGender,
+      items: provienceList,
+      value: _selectedProvience,
       onChanged: (value) {
         setState(() {
-          _selectedGender = int.parse(value.toString());
+          _selectedProvience = int.parse(value.toString());
         });
       },
       isExpanded: true,
@@ -262,14 +263,6 @@ class _SignUpFormState extends State<SignUpForm> {
 
           print("Name " + _name);
           print("Age " + _age.toString());
-          switch (_selectedGender) {
-            case 0:
-              print("Gender Male");
-              break;
-            case 1:
-              print("Gender Female");
-              break;
-          }
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('Form Submitted')));
         }
